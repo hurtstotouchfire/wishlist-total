@@ -1,8 +1,8 @@
+console.log("background running");
+var total = 0.0;
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.greeting == "hello")
-      sendResponse({success: "ok"});
+    console.log(request["total"]);
+    sendResponse({"success": "ok", "request":request});
+    document.total = request["total"]
   });
