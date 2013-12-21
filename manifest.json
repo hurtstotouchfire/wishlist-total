@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Wishlist Total",
+  "version": "1.0",
+  "author":"Michael Penhallegon",
+
+  "content_scripts": [
+    {
+      "matches":["http://www.amazon.com/gp/registry*"],
+      "js": ["./libs/jquery-2.0.3.js","content.js"]
+    }
+  ],
+  "background": {
+    "script":["background.js"]
+  },
+  "permissions":[
+    "tabs",
+    "storage",
+    "http://amazon.com/*",
+    "http://www.amazon.com/gp/registry/*"
+  ]
+}
