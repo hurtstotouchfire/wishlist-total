@@ -3,6 +3,15 @@
   "name": "Wishlist Total",
   "version": "1.0",
   "author":"Michael Penhallegon",
+  
+  "page_action": {
+    "default_icon":"static/wishlist.png",
+    "default_popup":"popup.html"
+  },
+  "background": {
+    "script":["background.js"],
+    "page":"background.html"
+  },
 
   "content_scripts": [
     {
@@ -10,9 +19,7 @@
       "js": ["./libs/jquery-2.0.3.js","content.js"]
     }
   ],
-  "background": {
-    "script":["background.js"]
-  },
+
   "permissions":[
     "tabs",
     "storage",
