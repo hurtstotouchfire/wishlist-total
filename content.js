@@ -1,7 +1,5 @@
 //(c) Michael Penhallegon, all rights reserved
 
-console.log("wishlist total loaded");
-
 var total = 0.0;
 var itemPrices = Array();
 var id = "";
@@ -46,6 +44,6 @@ total = itemPrices.reduce(function(pv, cv) {return sum(pv, cv)});
 
 // send message to with wishlist total
 
-chrome.runtime.sendMessage({"total":total}, function(response){
+chrome.runtime.sendMessage({"total":total, "wishlist_id":id}, function(response){
     console.log(response.success);
 });
