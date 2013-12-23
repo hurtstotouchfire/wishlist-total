@@ -38,6 +38,9 @@ else {
   //attempts to get the wishlist id
   if (document.URL.split("/")[6] != "ref=wish_list") {
     id = document.URL.split("/")[6];
+  } else {
+    // pulls in case on ref=wish_list frontpage of wishlist section
+   id = $("div.a-popover-preload div.profile a.a-declarative").attr("href").split("/")[7].split("&")[2].split("=")[1]
   }
 }
 
