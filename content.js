@@ -36,7 +36,9 @@ else {
   selector_query[selector_query.indexOf("span.a-color-price")] += (".a-text-bold");
   
   //attempts to get the wishlist id
-  id = document.URL.split("/")[6];
+  if (!document.URL.split("/")[6] == "ref=wish_list") {
+    id = document.URL.split("/")[6];
+  }
 }
 
 itemPrices = $.map($(selector_query.join(" ")), function (v) {return parseFloat(v.innerText.split("$")[1]);});
