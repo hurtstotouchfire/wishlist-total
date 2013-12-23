@@ -1,8 +1,10 @@
-console.log("background running");
+//(c) Michael Penhallegon, all rights reserved
+
 var total = 0.0;
 if (!wishlist_request) {
   var wishlist_request = {};
 }
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     chrome.pageAction.show(sender.tab.id);

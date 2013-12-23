@@ -1,3 +1,4 @@
+//(c) Michael Penhallegon, all rights reserved
 
 bg = chrome.extension.getBackgroundPage();
 var current_tab_id;
