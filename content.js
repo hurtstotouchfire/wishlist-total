@@ -4,6 +4,8 @@ var total = 0.0;
 var itemPrices = Array();
 var id = "";
 
+var wlist_id_re = new RegExp("a+b");
+
 // function used in reduce to add all the values up for total
 // if price is not NaN it adds to total if not then return last total
 
@@ -34,14 +36,7 @@ else if (grid_page === 1){
 }
 else {
   selector_query[selector_query.indexOf("span.a-color-price")] += (".a-text-bold");
-  
-  //attempts to get the wishlist id
-  if (document.URL.split("/")[6] != "ref=wish_list") {
-    id = document.URL.split("/")[6];
-  } else {
-    // pulls in case on ref=wish_list frontpage of wishlist section
-   id = $("div.a-popover-preload div.profile a.a-declarative").attr("href").split("/")[7].split("&")[2].split("=")[1]
-  }
+  id = $("div.a-popover-preload div.profile a.a-declarative").attr("href").split("/")[7].split("&")[2].split("=")[1]
 }
 
 itemPrices = $.map($(selector_query.join(" ")), function (v) {return parseFloat(v.innerText.split("$")[1]);});
