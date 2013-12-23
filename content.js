@@ -36,7 +36,7 @@ else {
   selector_query[selector_query.indexOf("span.a-color-price")] += (".a-text-bold");
   
   //attempts to get the wishlist id
-  if (!document.URL.split("/")[6] == "ref=wish_list") {
+  if (document.URL.split("/")[6] != "ref=wish_list") {
     id = document.URL.split("/")[6];
   }
 }
