@@ -9,14 +9,14 @@
     "default_popup":"popup.html"
   },
   "background": {
-    "script":["background.js"],
+    "script":["./js/background.js"],
     "page":"background.html"
   },
 
   "content_scripts": [
     {
       "matches":["http://www.amazon.com/gp/registry*"],
-      "js": ["./libs/jquery-2.0.3.js","content.js"]
+      "js": ["./lib/jquery-2.0.3.js","./js/content.js"]
     }
   ],
 
