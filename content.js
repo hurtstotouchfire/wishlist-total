@@ -1,10 +1,8 @@
-//(c) Michael Penhallegon, all rights reserved
+// (c) Michael Penhallegon, all rights reserved
 
 var total = 0.0;
 var itemPrices = Array();
 var id = "";
-
-var wlist_id_re = new RegExp("a+b");
 
 // function used in reduce to add all the values up for total
 // if price is not NaN it adds to total if not then return last total
@@ -17,6 +15,12 @@ function sum (previousValue, currentValue) {
   }
 }
 
+// get the id of the page from the link of the profile picture change url
+
+id = $("div.a-popover-preload div.profile a.a-declarative").attr("href").split("/")[7].split("&")[2].split("=")[1]
+
+// checks some classes to see if the page is compact, grid or regular
+
 compact_page = $("table.g-compact-items").length;
 grid_page = $("div.g-grid-page-wrapper").length;
 selector_query = ["span.a-color-price"];
@@ -25,19 +29,16 @@ selector_query = ["span.a-color-price"];
 
 if (compact_page === 1){
   selector_query.unshift("td.g-price");
-  marray = {};
-  
-  // attempts to get the id of the page
-  document.URL.split("&").slice(1).map(function(v){t = v.split("=");o = {}; j = t[0]; k = t[1]; marray[j] = k; return o});
-  id = marray.id;
 }
 else if (grid_page === 1){
   selector_query.unshift("div.price-section");
 }
 else {
   selector_query[selector_query.indexOf("span.a-color-price")] += (".a-text-bold");
-  id = $("div.a-popover-preload div.profile a.a-declarative").attr("href").split("/")[7].split("&")[2].split("=")[1]
 }
+
+// takes the selector_query and flattens it with a join, pulling from the dom
+// the price span elements.
 
 itemPrices = $.map($(selector_query.join(" ")), function (v) {return parseFloat(v.innerText.split("$")[1]);});
 total = itemPrices.reduce(function(pv, cv) {return sum(pv, cv)});

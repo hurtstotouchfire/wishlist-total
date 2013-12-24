@@ -1,10 +1,14 @@
 //(c) Michael Penhallegon, all rights reserved
 
-var total = 0.0;
-if (!wishlist_request) {
-  var wishlist_request = {};
-}
+var wishlist_request = {};
 
+
+// creates listener for message handler
+// sets the pageaction icon to be displayed
+// sends a response with a sucess "ok"
+// sets the tab id to the request obeject
+// sets the wishlist_request object as the locally
+// the locally scoped request object
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     chrome.pageAction.show(sender.tab.id);
