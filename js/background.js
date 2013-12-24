@@ -14,6 +14,10 @@
 
 var wishlist_request = {};
 
+getWishlistID = function(tab_id) {
+  return sessionStorage.getItem(tab_id);
+};
+
 
 // creates listener for message handler
 // sets the pageaction icon to be displayed
@@ -24,8 +28,12 @@ var wishlist_request = {};
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     chrome.pageAction.show(sender.tab.id);
-    sendResponse({"success": "ok", "request":request});
-    request.tab_id = sender.tab.id;
-    wishlist_request = request;
-    sessionStorage.setItem(sender.tab.id, request.wishlist_id);
+    if (request.total) {
+      sendResponse({"success": "ok", "request":request});
+      request.tab_id = sender.tab.id;
+      wishlist_request = request;
+      sessionStorage.setItem(sender.tab.id, request.wishlist_id);
+    } else {
+      sendResponse({"sucess":"error","error":"invalid message"});
+    }
   });
