@@ -17,7 +17,7 @@
 // first we bring in the wishlist_request object from the background page
 
 wishlist_request = chrome.extension.getBackgroundPage().wishlist_request;
-getWishlistID = chrome.extension.getBackgroundPage().getWishlistID;
+getWishlistData = chrome.extension.getBackgroundPage().getWishlistData;
 var current_tab_id;
 var wishlist_id;
 
@@ -30,11 +30,13 @@ $(document).ready(function() {
       //verfies that the current tab selected is the tab last queried
       if(wishlist_request.tab_id == current_tab_id) {
         $("span.price").text(Number(wishlist_request.total).toFixed(2));
-        $("sub.wishlist_id").text(wishlist_request.wishlist_id);
+        wishlist_id = wishlist_request.wishlist_id;
       } else {
-          wishlist_id = getWishlistID(current_tab_id);
-           $("sub.error").text(wishlist_id + "Not on currently calculated wishlist; please refresh page");
+        wishlist_id = getWishlistData(current_tab_id).wishlist_id;
+        $("sub.error").text("wishlist not currently calculated");
       }
+      
+      $("sub.wishlist_id").text(wishlist_id);
      
     });
   });

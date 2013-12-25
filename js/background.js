@@ -13,9 +13,101 @@
 // limitations under the License.
 
 var wishlist_request = {};
+var wishlists = {};
+wishlists.indexedDB = {};
+wishlists.indexedDB.db = null;
 
-getWishlistID = function(tab_id) {
-  return sessionStorage.getItem(tab_id);
+var wishlist_list = [];
+wishlists.indexedDB.open = function() {
+  var version = 4;
+  var request = indexedDB.open ("wishlists",version);
+  console.info("in init");
+  
+  request.onsuccess = function(e) {
+    wishlists.indexedDB.db = e.target.result;
+    wishlists.indexedDB.fetchWishlists();
+    console.info("in onsuccess");
+  };
+  
+  request.onupgradeneeded = function(e){
+    console.info("in upgrade");
+    var db = e.target.result;
+    
+    e.target.transaction.onerror = wishlists.indexedDB.onerror;
+    if(db.objectStoreNames.contains("wishlists")) {
+      db.deleteObjectStore("wishlists");
+    }
+    
+    var store = db.createObjectStore("wishlists", {keyPath:"wishlist_id"});
+  };
+  
+  request.onerror = wishlists.indexedDB.onerror;
+  
+};
+
+wishlists.indexedDB.addWishlist = function(data) {
+  var db = wishlists.indexedDB.db;
+  var trans = db.transaction(["wishlists"], "readwrite");
+  var store = trans.objectStore("wishlists");
+  
+  var request = store.put({
+    "wishlist_id": data.wishlist_id,
+    "total": data.total
+  });
+  
+  request.onsucess = function(e) {
+    wishlists.indexedDB.fetchWishlists();
+  };
+  request.onerror = function(e){
+    console.log(e.value);
+  };
+};
+
+
+wishlists.indexedDB.fetchWishlists = function(){
+  var db = wishlists.indexedDB.db;
+  var trans = db.transaction(["wishlists"], "readwrite");
+  var store = trans.objectStore("wishlists");
+  
+  var keyRange = IDBKeyRange.lowerBound(0);
+  var cursorRequest = store.openCursor(keyRange);
+  
+  cursorRequest.onsucess = function(e) {
+    var result = e.target.result;
+    
+    updateWishlist_list(reslut.value);
+    result.continue;
+  };
+  cursorRequest.onerror = wishlists.indexedDB.onerror;
+};
+wishlists.indexedDB.deleteWishlist = function(id) {
+  var db = wishlists.indexedDB.db;
+  var trans = db.transaction(["wishlists"], "readwrite");
+  var store = trans.objectStore("wishlists");
+  
+  var request = store.delete(id);
+  
+  request.onsucess = function(e) {
+    wishlists.indexedDB.fetchWishlists();
+  }
+  request.onerror = function(e) {
+    console.log(e);
+  };
+};
+
+function init_DB() {
+  wishlists.indexedDB.open();
+  wishlist_list = [];
+}
+
+window.addEventListener("DOMContentLoaded", init_DB, false);
+
+function updateWishlist_list(row) {
+  wishlist_list.concat(row);
+}
+getWishlistData = function(tab_id) {
+  wishlist_id = {"wishlist_id":sessionStorage.getItem(tab_id)};
+  
 };
 
 
@@ -32,6 +124,7 @@ chrome.runtime.onMessage.addListener(
       sendResponse({"success": "ok", "request":request});
       request.tab_id = sender.tab.id;
       wishlist_request = request;
+      wishlists.indexedDB.addWishlist({"wishlist_id":request.wishlist_id, "total":request.total});
       sessionStorage.setItem(sender.tab.id, request.wishlist_id);
     } else {
       sendResponse({"sucess":"error","error":"invalid message"});
