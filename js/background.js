@@ -17,20 +17,17 @@ var wishlists = {};
 wishlists.indexedDB = {};
 wishlists.indexedDB.db = null;
 
-var wishlist_list = [];
+var query_result = {};
 wishlists.indexedDB.open = function() {
   var version = 4;
   var request = indexedDB.open ("wishlists",version);
-  console.info("in init");
   
   request.onsuccess = function(e) {
     wishlists.indexedDB.db = e.target.result;
-    wishlists.indexedDB.fetchWishlists();
-    console.info("in onsuccess");
   };
   
   request.onupgradeneeded = function(e){
-    console.info("in upgrade");
+    console.info("upgraded schema");
     var db = e.target.result;
     
     e.target.transaction.onerror = wishlists.indexedDB.onerror;
@@ -55,8 +52,7 @@ wishlists.indexedDB.addWishlist = function(data) {
     "total": data.total
   });
   
-  request.onsucess = function(e) {
-    wishlists.indexedDB.fetchWishlists();
+  request.onsuccess = function(e) {
   };
   request.onerror = function(e){
     console.log(e.value);
@@ -64,21 +60,16 @@ wishlists.indexedDB.addWishlist = function(data) {
 };
 
 
-wishlists.indexedDB.fetchWishlists = function(){
+wishlists.indexedDB.fetchWishlist = function(query){
   var db = wishlists.indexedDB.db;
-  var trans = db.transaction(["wishlists"], "readwrite");
+  var trans = db.transaction(["wishlists"], "readonly");
   var store = trans.objectStore("wishlists");
+  var request = store.get(query);
   
-  var keyRange = IDBKeyRange.lowerBound(0);
-  var cursorRequest = store.openCursor(keyRange);
-  
-  cursorRequest.onsucess = function(e) {
-    var result = e.target.result;
-    
-    updateWishlist_list(reslut.value);
-    result.continue;
+  request.onsuccess = function(event) {
+    returnWishlist(request.result);
   };
-  cursorRequest.onerror = wishlists.indexedDB.onerror;
+  request.onerror = wishlists.indexedDB.onerror;
 };
 wishlists.indexedDB.deleteWishlist = function(id) {
   var db = wishlists.indexedDB.db;
@@ -87,9 +78,8 @@ wishlists.indexedDB.deleteWishlist = function(id) {
   
   var request = store.delete(id);
   
-  request.onsucess = function(e) {
-    wishlists.indexedDB.fetchWishlists();
-  }
+  request.onsuccess = function(e) {
+  };
   request.onerror = function(e) {
     console.log(e);
   };
@@ -102,18 +92,19 @@ function init_DB() {
 
 window.addEventListener("DOMContentLoaded", init_DB, false);
 
-function updateWishlist_list(row) {
-  wishlist_list.concat(row);
+function returnWishlist(row) {
+  query_result = row;
 }
 getWishlistData = function(tab_id) {
-  wishlist_id = {"wishlist_id":sessionStorage.getItem(tab_id)};
-  
+  wishlist_id = sessionStorage.getItem(tab_id);
+  wishlists.indexedDB.fetchWishlist(wishlist_id);
+  return query_result;
 };
 
 
 // creates listener for message handler
 // sets the pageaction icon to be displayed
-// sends a response with a sucess "ok"
+// sends a response with a success "ok"
 // sets the tab id to the request obeject
 // sets the wishlist_request object as the locally
 // the locally scoped request object
@@ -127,6 +118,6 @@ chrome.runtime.onMessage.addListener(
       wishlists.indexedDB.addWishlist({"wishlist_id":request.wishlist_id, "total":request.total});
       sessionStorage.setItem(sender.tab.id, request.wishlist_id);
     } else {
-      sendResponse({"sucess":"error","error":"invalid message"});
+      sendResponse({"success":"error","error":"invalid message"});
     }
   });

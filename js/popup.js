@@ -32,8 +32,13 @@ $(document).ready(function() {
         $("span.price").text(Number(wishlist_request.total).toFixed(2));
         wishlist_id = wishlist_request.wishlist_id;
       } else {
-        wishlist_id = getWishlistData(current_tab_id).wishlist_id;
-        $("sub.error").text("wishlist not currently calculated");
+        var wishlist_data = getWishlistData(current_tab_id);
+        if (!(wishlist_data.total).isNaN) {
+          $("span.price").text(Number(wishlist_data.total).toFixed(2));
+        } else {
+          $("sub.error").text("unable to retrieve total; try again");
+        }
+        wishlist_id = wishlist_data.wishlist_id;
       }
       
       $("sub.wishlist_id").text(wishlist_id);
