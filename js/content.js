@@ -16,6 +16,8 @@ var total = 0.0;
 var itemPrices = Array();
 var id = "";
 
+
+itemNum = 1;
 // function used in reduce to add all the values up for total
 // if price is not NaN it adds to total if not then return last total
 
@@ -23,6 +25,7 @@ function sum (previousValue, currentValue) {
   if (isNaN(currentValue)) {
     return previousValue;
   } else {
+    itemNum += 1;
     return previousValue+currentValue;
   }
 }
@@ -55,8 +58,12 @@ else {
 itemPrices = $.map($(selector_query.join(" ")), function (v) {return parseFloat(v.innerText.split("$")[1]);});
 total = itemPrices.reduce(function(pv, cv) {return sum(pv, cv)});
 
+// get list name
+
+list_name = $("span.g-visible-js span#profile-list-name").text();
+
 // send message to with wishlist total
 
-chrome.runtime.sendMessage({"total":total, "wishlist_id":id}, function(response){
+chrome.runtime.sendMessage({"name":list_name, "total":total, "wishlist_id":id, "item_num":itemNum}, function(response){
     console.log(response.success);
 });

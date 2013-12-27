@@ -19,7 +19,7 @@ wishlists.indexedDB.db = null;
 
 var query_result = {};
 wishlists.indexedDB.open = function() {
-  var version = 4;
+  var version = 6;
   var request = indexedDB.open ("wishlists",version);
   
   request.onsuccess = function(e) {
@@ -47,9 +47,12 @@ wishlists.indexedDB.addWishlist = function(data) {
   var trans = db.transaction(["wishlists"], "readwrite");
   var store = trans.objectStore("wishlists");
   
+  // sets schema update version if edited
   var request = store.put({
     "wishlist_id": data.wishlist_id,
-    "total": data.total
+    "total": data.total,
+    "name": data.name,
+    "item_num": data.item_num
   });
   
   request.onsuccess = function(e) {
@@ -114,8 +117,7 @@ chrome.runtime.onMessage.addListener(
     if (request.total) {
       sendResponse({"success": "ok", "request":request});
       request.tab_id = sender.tab.id;
-      wishlist_request = request;
-      wishlists.indexedDB.addWishlist({"wishlist_id":request.wishlist_id, "total":request.total});
+      wishlists.indexedDB.addWishlist(request);
       sessionStorage.setItem(sender.tab.id, request.wishlist_id);
     } else {
       sendResponse({"success":"error","error":"invalid message"});
