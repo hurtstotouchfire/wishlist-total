@@ -1,0 +1,14 @@
+body {
+  background-color:#111166;
+}
+#total_placeholder {
+  font: bold 14pt sans-serif;
+  color: white;
+}
+.wishlist_id {
+  display:none;
+}
+.error {
+  color:white;
+  background:red;
+}
