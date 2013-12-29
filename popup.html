@@ -5,7 +5,12 @@
   </head>
   <body>
     $<span class="price"></span>
-    <sub class="wishlist_id"></sub>
+    
+    <ul if="wishlist_info">
+    <li>Wishlist ID: <span class="wishlist_id"></span></li>
+      <li>Wishlist name: <span class="wishlist_name"></span></li>
+      <li>Quantity computed: <span class="item_number"></span></li>
+    </ul>
     <sub class="error"></sub>
   </body>
 </html>

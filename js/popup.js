@@ -35,13 +35,16 @@ $(document).ready(function() {
         var wishlist_data = getWishlistData(current_tab_id);
         if (!(wishlist_data.total).isNaN) {
           $("span.price").text(Number(wishlist_data.total).toFixed(2));
+          $("span.wishlist_name").text(wishlist_data.name);
+          $("span.item_number").text(wishlist_data.item_num);
         } else {
           $("sub.error").text("unable to retrieve total; try again");
         }
         wishlist_id = wishlist_data.wishlist_id;
       }
       
-      $("sub.wishlist_id").text(wishlist_id);
+      $("span.wishlist_id").text(wishlist_id);
+      
      
     });
   });
