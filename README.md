@@ -6,7 +6,7 @@ amazon wishlist total chrome extension, totals all items in wishlist and display
 Change Log
 ----------
 
-v1.0-beta1
+###v1.0-beta1
  - first release
  - can calculate the total for all Amazon-sold items on a wishlist (total does not include third-party sold items)
  - limited to current view max, so in the default view, it is limited to 25 items. compact view will show all items in the list thu calculate the total for everything
