@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 window {
   height: 68px;
 }
@@ -5,6 +6,7 @@ body {
   background-color:#111166;
 }
 .price {
+=======
   font: bold 14pt sans-serif;
   color: white;
 }
@@ -14,6 +16,7 @@ body {
 .error {
   color:white;
   background:red;
+<<<<<<< HEAD
 }
 .hidden {
   display:none;
