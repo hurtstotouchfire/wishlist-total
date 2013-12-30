@@ -1,7 +1,10 @@
+window {
+  height: 68px;
+}
 body {
   background-color:#111166;
 }
-#total_placeholder {
+.price {
   font: bold 14pt sans-serif;
   color: white;
 }
@@ -11,4 +14,8 @@ body {
 .error {
   color:white;
   background:red;
+}
+.hidden {
+  display:none;
+  visibility:hidden;
 }

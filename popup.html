@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <script src="./lib/jquery-2.0.3.js"></script>
@@ -5,13 +6,16 @@
     <link rel="stylesheet" type="text/css" href="./css/app.css" />
   </head>
   <body>
-    $<span class="price"></span>
-    
-    <ul if="wishlist_info">
-    <li>Wishlist ID: <span class="wishlist_id"></span></li>
-      <li>Wishlist name: <span class="wishlist_name"></span></li>
-      <li>Quantity computed: <span class="item_number"></span></li>
-    </ul>
-    <sub class="error"></sub>
+    <section>
+      <p>$<output class="price"></output></p>
+    </section>
+    <section class="hidden">
+      <ul if="wishlist_info">
+      <li>Wishlist ID: <output class="wishlist_id"></output></li>
+        <li>Wishlist name: <output class="wishlist_name"></output></li>
+        <li>Quantity computed: <output class="item_number"></output></li>
+      </ul>
+      <sub class="error"></sub>
+    </section>
   </body>
 </html>
