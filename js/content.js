@@ -30,9 +30,10 @@ function sum (previousValue, currentValue) {
   }
 }
 
-// get the id of the page from the link of the profile picture change url
-
-id = $("div.a-popover-preload div.profile a.a-declarative").attr("href").split("/")[7].split("&")[2].split("=")[1]
+// get wishlist attributes for the currently active wishlist
+var $wishlist_link = $(".g-active-list a");
+id = $wishlist_link.attr("href").split("/")[4];
+list_name = $wishlist_link.text().trim();
 
 // checks some classes to see if the page is compact, grid or regular
 
@@ -57,10 +58,6 @@ else {
 
 itemPrices = $.map($(selector_query.join(" ")), function (v) {return parseFloat(v.innerText.split("$")[1]);});
 total = itemPrices.reduce(function(pv, cv) {return sum(pv, cv)});
-
-// get list name
-
-list_name = $("span.g-visible-js span#profile-list-name").text();
 
 // send message to with wishlist total
 
