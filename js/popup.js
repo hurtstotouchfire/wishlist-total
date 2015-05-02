@@ -34,6 +34,8 @@ $(document).ready(function() {
       } else {
         var wishlist_data = getWishlistData(current_tab_id);
         if (!(wishlist_data.total).isNaN) {
+	  $(".wishlist_loading").hide();
+	  $(".wishlist_container").show();
           $(".wishlist_total").text(Number(wishlist_data.total).toFixed(2));
           $(".wishlist_name").text(wishlist_data.name);
           $(".item_number").text(wishlist_data.item_num);
