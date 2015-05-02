@@ -1,0 +1,25 @@
+body {background-color: #eee;}
+h1, h2 {margin-bottom: 0px;}
+h2 {color: #fc7;}
+p {color: red; font-weight: bold;}
+.wishlist_container {
+  display: none;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.wishlist_container :first-child {
+  margin-top: 0px;
+}
+.wishlist_total:before {
+  content: "$";
+}
+.wishlist_info {
+  list-style: none;
+  padding-left: 0px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  background-color: #fff;
+}

@@ -2,20 +2,22 @@
   <head>
     <script src="./lib/jquery-2.0.3.js"></script>
     <script src="./js/popup.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/popup.css" />
   </head>
   <body>
 
     <p class="wishlist_error"></p>
     <p class="wishlist_loading">Loading...</p>
     
-    <div class="wishlist_container" style="display: none;">
+    <div class="wishlist_container">
       
-      <p class="wishlist_total"></p>
-    
+      <h1>Total: <span class="wishlist_total"></span></h1>
+
+      <h2>Wishlist info</h2>
       <ul class="wishlist_info" if="wishlist_info">
-	<li class="wishlist_id"></li>
-	<li class="wishlist_name"></li>	
-	<li class="item_number"></li>
+	<li>ID: <span class="wishlist_id"></span></li>
+	<li>Name: <span class="wishlist_name"></span></li>	
+	<li>Items: <span class="item_number"></span></li>
       </ul>
 
     </div>    
