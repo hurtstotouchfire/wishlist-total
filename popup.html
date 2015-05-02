@@ -4,13 +4,20 @@
     <script src="./js/popup.js"></script>
   </head>
   <body>
-    $<span class="price"></span>
+
+    <p class="wishlist_error"></p>
     
-    <ul if="wishlist_info">
-    <li>Wishlist ID: <span class="wishlist_id"></span></li>
-      <li>Wishlist name: <span class="wishlist_name"></span></li>
-      <li>Quantity computed: <span class="item_number"></span></li>
-    </ul>
-    <sub class="error"></sub>
+    <div class="wishlist_container">
+      
+      <p class="wishlist_total"></p>
+    
+      <ul class ="wishlist_info" if="wishlist_info">
+	<li class="wishlist_id"></li>
+	<li class="wishlist_name"></li>	
+	<li class="item_number"></li>
+      </ul>
+
+    </div>    
+
   </body>
 </html>
