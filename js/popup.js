@@ -29,21 +29,23 @@ $(document).ready(function() {
       current_tab_id = t.id;
       //verfies that the current tab selected is the tab last queried
       if(wishlist_request.tab_id == current_tab_id) {
-        $("span.price").text(Number(wishlist_request.total).toFixed(2));
+        $(".wishlist_total").text(Number(wishlist_request.total).toFixed(2));
         wishlist_id = wishlist_request.wishlist_id;
       } else {
         var wishlist_data = getWishlistData(current_tab_id);
         if (!(wishlist_data.total).isNaN) {
-          $("span.price").text(Number(wishlist_data.total).toFixed(2));
-          $("span.wishlist_name").text(wishlist_data.name);
-          $("span.item_number").text(wishlist_data.item_num);
+	  $(".wishlist_loading").hide();
+	  $(".wishlist_container").show();
+          $(".wishlist_total").text(Number(wishlist_data.total).toFixed(2));
+          $(".wishlist_name").text(wishlist_data.name);
+          $(".item_number").text(wishlist_data.item_num);
         } else {
-          $("sub.error").text("unable to retrieve total; try again");
+          $(".wishlist_error").text("Unable to retrieve total. Please try again.");
         }
         wishlist_id = wishlist_data.wishlist_id;
       }
       
-      $("span.wishlist_id").text(wishlist_id);
+      $(".wishlist_id").text(wishlist_id);
       
      
     });
